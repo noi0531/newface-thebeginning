@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NewFace The Beginning</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0a0a0f; --bg2:#141428; --acc1:#8A2BE2; --acc2:#00D1FF; --acc3:#FF2E7E; --acc4:#FFD166; --text:#e9ecf1;
+      --glass:rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body {
+      margin: 0; background: radial-gradient(1200px 600px at 15% 10%, #1a1a3a 0%, transparent 70%),
+                 radial-gradient(1000px 600px at 85% 0%, #2a1048 0%, transparent 70%),
+                 linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text); font-family: 'Noto Sans JP', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height:1.7; overflow-x:hidden;
+      background-attachment: fixed;
+    }
+    .halo{position:fixed; inset:-20vmax; pointer-events:none; z-index:-1; filter:blur(60px); opacity:.6;
+      background: conic-gradient(from 0deg, var(--acc1), var(--acc2), var(--acc3), var(--acc4), var(--acc1));
+      animation: spin 18s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(1turn)}}
+
+    header{
+      position: relative; padding: 120px 24px 96px; text-align:center; overflow:hidden;
+    }
+    @keyframes fadeUp{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none}}
+    .hero-title{
+      font-family:'Great Vibes', cursive; font-weight:400; letter-spacing:.02em;
+      font-size: clamp(2.8rem, 6vw, 5rem); margin:0 0 0;
+      color:#fff; text-shadow: 0 6px 30px rgba(0,0,0,.35), 0 0 28px rgba(255,255,255,.18);
+      animation: fadeUp .9s ease both;
+    }
+    .hero-sub{font-size:clamp(1rem,1.6vw,1.35rem); opacity:.95; margin-top:-6px}
+    .badges{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:80px 0 28px}
+    .badge{padding:8px 14px; border-radius:999px; background:linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.15); backdrop-filter: blur(8px); font-weight:700}
+
+    .cta-wrap{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:18px}
+    .btn{position:relative; display:inline-block; padding:14px 26px; border-radius:14px; font-weight:900; text-decoration:none; color:#0c0c12;
+         background: linear-gradient(90deg, var(--acc3), var(--acc2));
+         box-shadow:0 8px 24px rgba(0,209,255,.35), inset 0 0 0 1px rgba(255,255,255,.3);
+         transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;}
+    .btn:hover{transform: translateY(-2px); filter:saturate(1.1); box-shadow:0 12px 36px rgba(0,209,255,.5)}
+    .btn.secondary{background: linear-gradient(90deg, #222, #111); color:#f2f5f9; border:1px solid rgba(255,255,255,.2)}
+
+    section{padding:72px 20px}
+    .container{max-width:1100px; margin:0 auto}
+    h2{font-family:'Playfair Display', serif; font-size:clamp(1.6rem,2.6vw,2.2rem); margin:0 0 20px; position:relative}
+    h2:after{content:""; display:block; height:3px; width:90px; margin-top:10px; background:linear-gradient(90deg, var(--acc2), var(--acc3))}
+
+    .grid{display:grid; grid-template-columns:repeat(12,1fr); gap:18px}
+    .card{grid-column: span 12; background:var(--glass); border:1px solid rgba(255,255,255,.15); border-radius:18px; padding:22px; 
+          box-shadow: 0 8px 40px rgba(0,0,0,.25); backdrop-filter: blur(10px); position:relative; overflow:hidden}
+    .card:before{content:""; position:absolute; inset: -40%; background: conic-gradient(from 0deg, transparent 0 70%, rgba(255,255,255,.08) 85% 100%);
+                 animation: sweep 8s linear infinite}
+    @keyframes sweep{to{transform:rotate(1turn)}}
+    @media (min-width:760px){
+      .span-6{grid-column: span 6}
+      .span-4{grid-column: span 4}
+      .span-8{grid-column: span 8}
+      .span-5{grid-column: span 5}
+      .span-7{grid-column: span 7}
+    }
+
+    table{width:100%; border-collapse:collapse; overflow:hidden; border-radius:14px}
+    th,td{padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.12)}
+    th{text-align:left; background:rgba(255,255,255,.06)}
+
+    .news-list{list-style:none; padding:0; margin:0}
+    .news-list li{padding:12px 0; border-bottom:1px dashed rgba(255,255,255,.16)}
+
+    .reveal{opacity:0; transform:translateY(12px); transition:opacity .7s ease, transform .7s ease}
+    .reveal.visible{opacity:1; transform:none}
+
+    footer{padding:40px 20px; text-align:center; color:#cfd6e7; border-top:1px solid rgba(255,255,255,.12)}
+    footer a{color:#cfd6e7}
+
+    .floaters{position:absolute; inset:0; pointer-events:none; overflow:hidden}
+    .blob{position:absolute; width:40vmin; height:40vmin; filter:blur(30px); opacity:.25; border-radius:50%; mix-blend-mode:screen}
+    .b1{background:radial-gradient(circle at 30% 30%, var(--acc2), transparent 60%); top:10%; left:-10%; animation: drift 16s ease-in-out infinite alternate}
+    .b2{background:radial-gradient(circle at 70% 70%, var(--acc3), transparent 60%); bottom:-10%; right:-10%; animation: drift 20s ease-in-out infinite alternate-reverse}
+    @keyframes drift{0%{transform:translate(0,0) scale(1)} 100%{transform:translate(6vmin,-4vmin) scale(1.08)}}
+
+    .nav{position:sticky; top:0; z-index:10; background:rgba(10,10,15,.6); backdrop-filter: blur(10px); border-bottom:1px solid rgba(255,255,255,.12)}
+    .nav-inner{max-width:1100px; margin:0 auto; padding:10px 16px; display:flex; gap:16px; align-items:center; justify-content:space-between}
+    .brand{font-weight:900; letter-spacing:.02em}
+    .nav a{color:#e9ecf1; text-decoration:none; opacity:.9}
+
+    .avatar{width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:14px; border:1px solid rgba(255,255,255,.18); box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    .advisor-name{font-weight:900; margin:10px 0 2px}
+    .advisor-role{opacity:.8; font-size:.95rem; margin:0 0 8px}
+
+    /* Lead Organizer */
+    .lead-photo{width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center top; border-radius:16px; border:1px solid rgba(255,255,255,.18); box-shadow:0 10px 32px rgba(0,0,0,.35)}
+    .lead-name{font-weight:900; font-size:clamp(1.4rem,2.2vw,1.8rem); margin:6px 0 2px}
+    .lead-role{opacity:.85; margin:0 0 10px}
+    .lead-points{margin:12px 0 0 0; padding:0}
+    .lead-points > li{list-style:none; margin-bottom:8px}
+    .lp-section{margin:12px 0; padding:12px 14px; border-radius:12px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12)}
+    .lp-section h4{margin:0 0 8px; font-size:1rem; letter-spacing:.04em; opacity:.9}
+    .ach-list{list-style:none; padding:0; margin:0}
+    .ach-list li{padding:6px 0; border-bottom:1px dashed rgba(255,255,255,.14)}
+    .ach-list li:last-child{border-bottom:none}
+  </style>
+</head>
+<body>
+  <div class="halo"></div>
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand">CCStudio</div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap">
+        <a href="#about">概要</a>
+        <a href="#schedule">スケジュール</a>
+        <a href="#benefits">特典</a>
+        <a href="#news">お知らせ</a>
+        <a href="#entry" class="btn" style="padding:8px 14px">応募</a>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="floaters" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+    </div>
+    <h1 class="hero-title">New Face The Beginning</h1>
+    <p class="hero-sub">新しい自分。ここから始まる──。</p>
+    <div class="badges">
+      <span class="badge"># 夢を追える</span>
+      <span class="badge"># 楽しい毎日</span>
+      <span class="badge"># メディア露出も</span>
+      <span class="badge"># 誰でも主人公</span>
+    </div>
+    </ul>
+            </div>
+            <div class="cta-wrap">
+      <a href="#entry" class="btn">今すぐ応募する</a>
+      <a href="#about" class="btn secondary">詳しく見る</a>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="container grid">
+      <div class="card span-8 reveal">
+        <h2>企画概要</h2>
+        <p>WAVE新人の挑戦を応援します。企画に出て一気に知名度アップ。新人王の順位も上がる、　　横の繋がりもできる。事務所にも入れる！？新人さんの全ての悩みにコミット。</p>
+        <ul>
+          <li>募集期間：<strong>毎月25日〜翌月3日まで</strong></li>
+          <li>対象者：18歳以上／WAVEの中で活躍していきたい方</li>
+          <li>活動内容：企画内での自己アピール</li>
+        </ul>
+      </div>
+      <div class="card span-4 reveal" style="display:flex; flex-direction:column; justify-content:center">
+        <h2>お悩みを解決</h2>
+        <p>✔ WAVEの何もかもが分からない<br/>✔ もっと目立ちたい<br/>✔ 新人王の順位を上げたい</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="schedule">
+    <div class="container grid">
+      <div class="card span-12 reveal">
+        <h2>企画イメージ</h2>
+        <table>
+          <tr><th style="width:140px">フェーズ</th><th>内容</th></tr>
+          <tr><td>POINT1</td><td>自己アピール(自己紹介や目標などをアピール)</td></tr>
+          <tr><td>POINT2</td><td>ベテランスピーカーとの質疑応答</td></tr>
+          <tr><td>POINT3</td><td>前回出演者のインタビュー</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="benefits">
+    <div class="container grid">
+      <div class="card span-12 reveal"><h2>Streaming Advisor</h2>
+        <div class="grid">
+          <div class="card span-4" style="text-align:center">
+            <img class="avatar" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop" alt="Advisor Yume nomata Yume の写真"/>
+            <h3 class="advisor-name">Yume nomata Yume</h3>
+            <p class="advisor-role">Streaming Advisor / イベント、歌</p>
+            <p>トークから歌まで全てが　　　　　　　ハイクオリティのWAVEQueen</p>
+          </div>
+          <div class="card span-4" style="text-align:center">
+            <img class="avatar" src="https://images.unsplash.com/photo-1524504388940-1d7a1c1f81b0?q=80&w=1200&auto=format&fit=crop" alt="Advisor Suzuki の写真"/>
+            <h3 class="advisor-name">Suzuki</h3>
+            <p class="advisor-role">Streaming Advisor / エンタメ、イベント</p>
+            <p>圧倒的なパフォーマンスで一気に　　　トップま駆け上がったエンタメライバー</p>
+          </div>
+          <div class="card span-4" style="text-align:center">
+            <img class="avatar" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1200&auto=format&fit=crop" alt="Advisor Konosaki Kiroka の写真"/>
+            <h3 class="advisor-name">Konosaki Kiroka</h3>
+            <p class="advisor-role">Streaming Advisor / トークの幅</p>
+            <p>歴は浅いものの高いポテンシャルと　　コミュ力をもつ天才ライバー</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lead Organizer featured block -->
+      <div class="card span-12 reveal" id="lead">
+        <h2>Lead Organizer</h2>
+        <div class="grid" style="align-items:center">
+          <div class="span-5">
+            <img class="lead-photo" src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=1600&auto=format&fit=crop" alt="Lead Organizer の写真" />
+          </div>
+          <div class="span-7">
+            <h3 class="lead-name">Chama</h3>
+            <p class="lead-role">Lead Organizer / New Face The Beginning</p>
+            <p>企画全体の設計・進行・メンタリングを統括。WAVE新人の初動を最速で成功体験につなげる運用が強みです。</p>
+            <ul class="lead-points">
+              <ul class="lead-points">
+              <li><strong>ライバー実績</strong></li>
+            </ul>
+            </ul>
+            <div class="lp-section">
+              <h4>WAVE</h4>
+              <ul class="ach-list">
+                <li>アプリ初のミリオンライバー</li>
+                <li>新人王開発者（現在でも携わる）</li>
+                <li>Weポス開発者（現在でも携わる）</li>
+                <li>視聴時間最多記録（1,000万秒）</li>
+                <li>取得コイン史上最多（<small>月間</small>）</li>
+                <li>取得コイン史上最多（<small>イベント</small>）</li>
+                <li>取得コイン史上最多（<small>日間</small>）</li>
+                <li>サブスク登録者最多（52人）</li>
+                <li>アプリ広告出演（YouTube）</li>
+                <li>イベント1位 21回</li>
+                <li>スピーカーとしてFMラジオ出演</li>
+                <li style="opacity:.8">※その他実績多数</li>
+              </ul>
+            </div>
+            <div class="lp-section">
+              <h4>17LIVE</h4>
+              <ul class="ach-list">
+                <li>新人イベント1位（850万c）</li>
+              </ul>
+            </div>
+            <div class="lp-section">
+              <h4>REALITY</h4>
+              <ul class="ach-list">
+                <li>新人イベント1位（アプリ史上最多記録）</li>
+              </ul>
+            </div>
+            <div class="cta-wrap" style="justify-content:flex-start; margin-top:14px">
+              <a href="#entry" class="btn">担当者に相談する</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="container grid">
+      <div class="card span-12 reveal">
+        <h2>最新のお知らせ</h2>
+        <ul class="news-list">
+          <li>2025/08/23 — サイト公開＆プレエントリー開始</li>
+          <li>2025/08/07 — vol1開催</li>
+          <li>2025/07/25 — vol1応募スタート</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="entry">
+    <div class="container grid">
+      <div class="card span-12 reveal" style="text-align:center">
+        <h2>エントリー</h2>
+        <p>以下のフォームより必要事項をご入力ください。応募後、担当よりご連絡します。</p>
+        <a href="https://forms.gle/your-form-link" class="btn" style="font-size:1.1rem; padding:16px 32px">Googleフォームで応募する</a>
+        <p style="opacity:.8; margin-top:10px">※フォームURLを差し替えてご利用ください</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 NewFace Project | Produced by CCStudio</p>
+    <p><a href="https://wavejp.onelink.me/cCTa/inappshareprofilejp?af_dp=wavelive%3A%2F%2F&w_user=0a6b9fba-c8df-4ac5-bc31-c2a709e4068f" target="_blank" rel="noopener">お問い合わせ</a></p>
+  </footer>
+
+  <script>
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target);} });
+    }, {threshold:.12});
+    els.forEach(el=>io.observe(el));
+  </script>
+</body>
+</html>
