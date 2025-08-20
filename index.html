@@ -109,6 +109,15 @@
     .ach-list{list-style:none; padding:0; margin:0}
     .ach-list li{padding:6px 0; border-bottom:1px dashed rgba(255,255,255,.14)}
     .ach-list li:last-child{border-bottom:none}
+
+    /* Clickable zoomed images */
+    .img-zoom{display:block; overflow:hidden; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.25); cursor:pointer}
+    .img-zoom.lead-zoom{border-radius:16px}
+    .img-zoom img{display:block; width:100%; height:100%; transition:transform .25s ease, filter .25s ease}
+    .img-zoom:hover img,.img-zoom:focus-visible img{transform:scale(1.05)}
+    .img-zoom:active img{transform:scale(0.98)}
+    .img-zoom:focus-visible{outline:2px solid var(--acc2); outline-offset:3px}
+    @media (prefers-reduced-motion: reduce){.img-zoom img{transition:none}}
   
     /* Mobile styles */
     @media (max-width: 759px){
@@ -146,6 +155,15 @@
       .lead-photo{aspect-ratio:4/5; max-height:70vh}
       .lp-section{padding:10px 12px}
     }
+  
+    /* Clickable zoom images */
+    .img-zoom{display:block; overflow:hidden; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.25); cursor:pointer}
+    .img-zoom.lead-zoom{border-radius:16px}
+    .img-zoom img{display:block; width:100%; height:100%; transition:transform .25s ease, filter .25s ease}
+    .img-zoom:hover img,.img-zoom:focus-visible img{transform:scale(1.05)}
+    .img-zoom:active img{transform:scale(0.98)}
+    .img-zoom:focus-visible{outline:2px solid var(--acc2); outline-offset:3px}
+    @media (prefers-reduced-motion: reduce){.img-zoom img{transition:none}}
   </style>
 </head>
 <body>
@@ -219,20 +237,24 @@
       <div class="card span-12 reveal"><h2>Streaming Advisor</h2>
         <div class="grid">
           <div class="card span-4" style="text-align:center">
-           <img class="avatar" src="images/advisors/yume.webp" alt="Advisor Yume nomata Yume の写真">
+<a class="img-zoom" href="https://wavejp.onelink.me/cCTa/inappshareprofilejp?af_dp=wavelive%3A%2F%2F&w_user=8fc2efec-8a77-46e2-812b-29541de2c4fb" target="_blank" rel="noopener" aria-label="Yume nomata Yume">
+  <img class="avatar" src="images/advisors/yume.webp" alt="Advisor Yume nomata Yume の写真">
+</a>
             <h3 class="advisor-name">Yume nomata Yume</h3>
             <p class="advisor-role">Streaming Advisor / マインド、歌</p>
             <p>トークから歌まで全てがハイクオリティなWAVEQueen</p>
           </div>
           <div class="card span-4" style="text-align:center">
-            <img class="avatar" src="images/advisors/suzuki.webp" alt="Advisor Suzuki の写真">
+            <a class="img-zoom" href="#entry" aria-label="Suzuki のリンク（差し替え可）"><a class="img-zoom" href="#entry" aria-label="Suzuki"><img class="avatar" src="images/advisors/suzuki.webp" alt="Advisor Suzuki の写真"></a></a>
             <h3 class="advisor-name">Suzuki</h3>
             <p class="advisor-role">Streaming Advisor / エンタメ、イベント</p>
             <p>圧倒的パフォーマンスで一気に有名ライバーまで駆け上がったエンタメライバー</p>
           </div>
           <div class="card span-4" style="text-align:center">
-            <img class="avatar" src="images/advisors/kiroka.webp" alt="Advisor Konosaki Kiroka の写真">
-            <h3 class="advisor-name">Konosaki Kiroka</h3>
+<a class="img-zoom" href="https://wavejp.onelink.me/cCTa/inappshareprofilejp?af_dp=wavelive%3A%2F%2F&w_user=eee6edb4-c88e-42d9-8c7b-3be0498b120d" target="_blank" rel="noopener" aria-label="Konosaki Kiroka">
+  <img class="avatar" src="images/advisors/kiroka.webp" alt="Advisor Konosaki Kiroka の写真">
+</a>
+             <h3 class="advisor-name">Konosaki Kiroka</h3>
             <p class="advisor-role">Streaming Advisor / トークの幅</p>
             <p>歴は浅いものの高いポテンシャルとコミュ力をもつ天才ライバー</p>
           </div>
@@ -244,7 +266,9 @@
         <h2>Lead Organizer</h2>
         <div class="grid" style="align-items:flex-start">
           <div class="span-5">
-           <img class="lead-photo" src="images/organizer/chama_left_1080x1440.webp" alt="Lead Organizer の写真">
+<a class="img-zoom lead-zoom" href="https://wavejp.onelink.me/cCTa/inappshareprofilejp?af_dp=wavelive%3A%2F%2F&w_user=1dff5462-d46c-49c2-8fbe-e3f9380dba18" target="_blank" rel="noopener" aria-label="Chama">
+  <img class="lead-photo" src="images/organizer/chama_left_1080x1440.webp" alt="Lead Organizer の写真">
+</a>
           </div>
           <div class="span-7">
             <h3 class="lead-name">Chama</h3>
