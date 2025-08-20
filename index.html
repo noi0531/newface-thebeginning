@@ -79,6 +79,10 @@
     footer{padding:40px 20px; text-align:center; color:#cfd6e7; border-top:1px solid rgba(255,255,255,.12)}
     footer a{color:#cfd6e7}
 
+    /* Mobile-friendly text wrapping */
+    p, li{overflow-wrap:anywhere}
+    .cta-wrap .btn{min-width:180px}
+
     .floaters{position:absolute; inset:0; pointer-events:none; overflow:hidden}
     .blob{position:absolute; width:40vmin; height:40vmin; filter:blur(30px); opacity:.25; border-radius:50%; mix-blend-mode:screen}
     .b1{background:radial-gradient(circle at 30% 30%, var(--acc2), transparent 60%); top:10%; left:-10%; animation: drift 16s ease-in-out infinite alternate}
@@ -95,7 +99,7 @@
     .advisor-role{opacity:.8; font-size:.95rem; margin:0 0 8px}
 
     /* Lead Organizer */
-    .lead-photo{width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center top; border-radius:16px; border:1px solid rgba(255,255,255,.18); box-shadow:0 10px 32px rgba(0,0,0,.35)}
+    .lead-photo{width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center top; margin-top:-6px; border-radius:16px; border:1px solid rgba(255,255,255,.18); box-shadow:0 10px 32px rgba(0,0,0,.35)}
     .lead-name{font-weight:900; font-size:clamp(1.4rem,2.2vw,1.8rem); margin:6px 0 2px}
     .lead-role{opacity:.85; margin:0 0 10px}
     .lead-points{margin:12px 0 0 0; padding:0}
@@ -105,6 +109,35 @@
     .ach-list{list-style:none; padding:0; margin:0}
     .ach-list li{padding:6px 0; border-bottom:1px dashed rgba(255,255,255,.14)}
     .ach-list li:last-child{border-bottom:none}
+  
+    /* Mobile styles */
+    @media (max-width: 759px){
+      body{background-attachment: scroll}
+      header{padding:84px 16px 64px}
+      section{padding:56px 16px}
+      .container{max-width:100%}
+      .grid{gap:12px}
+      .card{padding:16px}
+      .nav-inner{padding:8px 12px}
+      .nav a{font-size:.95rem}
+      .hero-title{font-size:clamp(2rem,9vw,3rem)}
+      .hero-sub{font-size:clamp(.95rem,3.6vw,1.05rem); margin-top:-2px; text-wrap:balance}
+      .badges{gap:8px; margin:36px 0 20px}
+      .badge{font-size:.85rem; padding:6px 10px}
+      .cta-wrap{flex-direction:column; gap:10px}
+      .btn{width:100%; text-align:center}
+      table{display:block; overflow-x:auto; -webkit-overflow-scrolling:touch}
+      th,td{white-space:nowrap}
+      .advisor-name{font-size:1.05rem}
+      .advisor-role{font-size:.9rem}
+      .lead-name{font-size:1.3rem}
+      .lead-photo{aspect-ratio:4/5}
+      .mobile-cta{display:block}
+    }
+
+    /* Sticky mobile CTA */
+    .mobile-cta{display:none; position:fixed; left:0; right:0; bottom:12px; z-index:50; padding:0 12px 12px}
+    .mobile-cta .btn{border-radius:999px; padding:14px 20px}
   </style>
 </head>
 <body>
@@ -135,9 +168,7 @@
       <span class="badge"># メディア露出も</span>
       <span class="badge"># 誰でも主人公</span>
     </div>
-    </ul>
-            </div>
-            <div class="cta-wrap">
+    <div class="cta-wrap">
       <a href="#entry" class="btn">今すぐ応募する</a>
       <a href="#about" class="btn secondary">詳しく見る</a>
     </div>
@@ -177,7 +208,7 @@
 
   <section id="benefits">
     <div class="container grid">
-      <div class="card span-12 reveal"><h2>Streaming Advisor</h2>
+  <div class="card span-12 reveal"><h2>Streaming Advisor</h2>
         <div class="grid">
           <div class="card span-4" style="text-align:center">
             <img class="avatar" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop" alt="Advisor Yume nomata Yume の写真"/>
@@ -203,7 +234,7 @@
       <!-- Lead Organizer featured block -->
       <div class="card span-12 reveal" id="lead">
         <h2>Lead Organizer</h2>
-        <div class="grid" style="align-items:center">
+        <div class="grid" style="align-items:flex-start">
           <div class="span-5">
             <img class="lead-photo" src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=1600&auto=format&fit=crop" alt="Lead Organizer の写真" />
           </div>
@@ -212,9 +243,7 @@
             <p class="lead-role">Lead Organizer / New Face The Beginning</p>
             <p>企画全体の設計・進行・メンタリングを統括。WAVE新人の初動を最速で成功体験につなげる運用が強みです。</p>
             <ul class="lead-points">
-              <ul class="lead-points">
               <li><strong>ライバー実績</strong></li>
-            </ul>
             </ul>
             <div class="lp-section">
               <h4>WAVE</h4>
@@ -278,6 +307,10 @@
       </div>
     </div>
   </section>
+
+  <div class="mobile-cta">
+    <a href="#entry" class="btn">今すぐ応募する</a>
+  </div>
 
   <footer>
     <p>© 2025 NewFace Project | Produced by CCStudio</p>
