@@ -138,6 +138,14 @@
     /* Sticky mobile CTA */
     .mobile-cta{display:none; position:fixed; left:0; right:0; bottom:12px; z-index:50; padding:0 12px 12px}
     .mobile-cta .btn{border-radius:999px; padding:14px 20px}
+  
+    /* Extra mobile fix for Lead Organizer layout */
+    @media (max-width: 759px){
+      #lead .grid{grid-template-columns:1fr; gap:12px}
+      #lead .span-5, #lead .span-7{grid-column:1 / -1}
+      .lead-photo{aspect-ratio:4/5; max-height:70vh}
+      .lp-section{padding:10px 12px}
+    }
   </style>
 </head>
 <body>
@@ -208,25 +216,25 @@
 
   <section id="benefits">
     <div class="container grid">
-  <div class="card span-12 reveal"><h2>Streaming Advisor</h2>
+      <div class="card span-12 reveal"><h2>Streaming Advisor</h2>
         <div class="grid">
           <div class="card span-4" style="text-align:center">
             <img class="avatar" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1200&auto=format&fit=crop" alt="Advisor Yume nomata Yume の写真"/>
             <h3 class="advisor-name">Yume nomata Yume</h3>
-            <p class="advisor-role">Streaming Advisor / イベント、歌</p>
-            <p>トークから歌まで全てが　　　　　　　ハイクオリティのWAVEQueen</p>
+            <p class="advisor-role">Streaming Advisor / マインド、歌</p>
+            <p>トークから歌まで全てがハイクオリティなWAVEQueen</p>
           </div>
           <div class="card span-4" style="text-align:center">
             <img class="avatar" src="https://images.unsplash.com/photo-1524504388940-1d7a1c1f81b0?q=80&w=1200&auto=format&fit=crop" alt="Advisor Suzuki の写真"/>
             <h3 class="advisor-name">Suzuki</h3>
             <p class="advisor-role">Streaming Advisor / エンタメ、イベント</p>
-            <p>圧倒的なパフォーマンスで一気に　　　トップま駆け上がったエンタメライバー</p>
+            <p>圧倒的パフォーマンスで一気に有名ライバーまで駆け上がったエンタメライバー</p>
           </div>
           <div class="card span-4" style="text-align:center">
             <img class="avatar" src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=1200&auto=format&fit=crop" alt="Advisor Konosaki Kiroka の写真"/>
             <h3 class="advisor-name">Konosaki Kiroka</h3>
             <p class="advisor-role">Streaming Advisor / トークの幅</p>
-            <p>歴は浅いものの高いポテンシャルと　　コミュ力をもつ天才ライバー</p>
+            <p>歴は浅いものの高いポテンシャルとコミュ力をもつ天才ライバー</p>
           </div>
         </div>
       </div>
@@ -241,7 +249,7 @@
           <div class="span-7">
             <h3 class="lead-name">Chama</h3>
             <p class="lead-role">Lead Organizer / New Face The Beginning</p>
-            <p>企画全体の設計・進行・メンタリングを統括。WAVE新人の初動を最速で成功体験につなげる運用が強みです。</p>
+            <p>企画全体の設計・進行・メンタリングを統括。WAVEで知らぬものが居ないアプリを代表するライバー</p>
             <ul class="lead-points">
               <li><strong>ライバー実績</strong></li>
             </ul>
