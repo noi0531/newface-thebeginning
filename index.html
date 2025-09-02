@@ -206,8 +206,9 @@
     </div>
     <div class="cta-wrap">
       <!-- 変更: 今すぐ応募する→モーダル起動 -->
-      <a href="#" data-open-entry class="btn">今すぐ応募する</a>
-      <a href="#about" class="btn secondary">詳しく見る</a>
+<a href="#entry" class="btn" data-open-entry>今すぐ応募する</a>
+<!-- ナビの応募ボタンも -->
+<a href="#entry" class="btn" style="padding:8px 14px" data-open-entry>応募</a>
     </div>
   </header>
 
@@ -417,98 +418,74 @@
   </script>
 
   <!-- ====== Slack送信スクリプト（追加） ====== -->
-  <script>
-    (function(){
-        const RELAY_URL = "https://script.google.com/macros/s/AKfycbyFKPwjtgvTssavIT0TjjK_mawZEQoIaqOb6sDpjVcvXDGgmLuAmKFnoVoYKwMcMjcp/exec"; // GASのWebアプリURL
-        const TOKEN = "king300cl";    
-      const triggers = document.querySelectorAll('[data-open-entry]');
-      const backdrop = document.getElementById('entryModalBackdrop');
-      const closeBtn = document.getElementById('closeEntryModal');
-      const form = document.getElementById('entryForm');
-      const submitBtn = document.getElementById('submitEntry');
-      const okBox = document.getElementById('entrySuccess');
-      const errBox = document.getElementById('entryError');
+<!-- ====== Slack送信スクリプト（差し替え） ====== -->
+<script>
+(function(){
+  // ← ここにだけ定義しておく
+  const RELAY_URL = "https://script.google.com/macros/s/AKfycbyvNjKY82wCBYneASAG1JvFcAlxJrTyRVQnayJTQpdPlb5YUdwUbuQ4fIAJ7gpnqq7j/exec";
+  const TOKEN = "king300cl"; // GAS側と一致
 
-      // ← 本番の Slack Incoming Webhook URL を設定
-      const SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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";
+  const triggers = document.querySelectorAll('[data-open-entry]');
+  const backdrop  = document.getElementById('entryModalBackdrop');
+  const closeBtn  = document.getElementById('closeEntryModal');
+  const form      = document.getElementById('entryForm');
+  const submitBtn = document.getElementById('submitEntry');
+  const okBox     = document.getElementById('entrySuccess');
+  const errBox    = document.getElementById('entryError');
 
-      function openModal(){
-        backdrop.classList.add('show');
-        document.body.style.overflow='hidden';
-        okBox.style.display='none';
-        errBox.style.display='none';
+  function openModal(){ backdrop.classList.add('show'); document.body.style.overflow='hidden'; okBox.style.display='none'; errBox.style.display='none'; }
+  function closeModal(){ backdrop.classList.remove('show'); document.body.style.overflow=''; }
+
+  // モーダル起動
+  triggers.forEach(el => el.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); }));
+  closeBtn?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('click', (e)=>{ if(e.target===backdrop) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && backdrop.classList.contains('show')) closeModal(); });
+
+  // 送信
+  form?.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    okBox.style.display='none'; errBox.style.display='none';
+    if(document.getElementById('website')?.value) return; // honeypot
+
+    const payload = {
+      waveName: document.getElementById('waveName').value.trim(),
+      intro:    document.getElementById('intro').value.trim(),
+      advisor:  document.getElementById('advisor').value,
+      goal:     document.getElementById('goal').value.trim(),
+      question: document.getElementById('question').value.trim()
+    };
+    if(!payload.waveName || !payload.intro || !payload.advisor || !payload.goal){
+      errBox.textContent = "未入力の項目があります。ご確認ください。";
+      errBox.style.display = 'block';
+      return;
+    }
+
+    submitBtn.disabled = true; submitBtn.textContent = "送信中…";
+
+    try{
+      // CORSプリフライト回避のためヘッダを付けない
+      const res  = await fetch(RELAY_URL, { method:'POST', body: JSON.stringify({ token: TOKEN, payload }) });
+      const json = await res.json();
+      console.log('relay result', json);
+
+      if(json.ok){
+        okBox.style.display = 'block';
+        form.reset();
+        setTimeout(closeModal, 1400);
+      }else{
+        errBox.textContent = "中継エラー：" + (json.error || json.body || ("status " + json.status));
+        errBox.style.display = 'block';
       }
-      function closeModal(){
-        backdrop.classList.remove('show');
-        document.body.style.overflow='';
-      }
-
-      triggers.forEach(el => el.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); }));
-      closeBtn?.addEventListener('click', closeModal);
-      backdrop?.addEventListener('click', (e)=>{ if(e.target===backdrop) closeModal(); });
-      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'&&backdrop.classList.contains('show')) closeModal(); });
-
-      form?.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        okBox.style.display='none';
-        errBox.style.display='none';
-        if(document.getElementById('website').value) return; // honeypot
-
-        const payload = {
-          waveName: document.getElementById('waveName').value.trim(),
-          intro: document.getElementById('intro').value.trim(),
-          advisor: document.getElementById('advisor').value,
-          goal: document.getElementById('goal').value.trim(),
-          question: document.getElementById('question').value.trim()
-        };
-        if(!payload.waveName || !payload.intro || !payload.advisor || !payload.goal){
-          errBox.textContent = "未入力の項目があります。ご確認ください。";
-          errBox.style.display = 'block';
-          return;
-        }
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = "送信中…";
-
-        // Slack Block Kit
-        const textBlock = {
-          blocks: [
-            { type: "header", text: { type: "plain_text", text: "📝 New Face エントリー", emoji: true } },
-            { type: "section", fields: [
-              { type: "mrkdwn", text: `*WAVE名:*\n${payload.waveName}` },
-              { type: "mrkdwn", text: `*担当者:*\n${payload.advisor}` },
-              { type: "mrkdwn", text: `*新人王の目標:*\n${payload.goal}` }
-            ]},
-            { type: "section", text: { type: "mrkdwn", text: `*自己紹介*\n${payload.intro}` } },
-            ...(payload.question ? [{ type: "section", text: { type: "mrkdwn", text: `*質問や要望*\n${payload.question}` } }] : []),
-            { type: "context", elements: [{ type: "mrkdwn", text: `送信: <!date^${Math.floor(Date.now()/1000)}^{date_num} {time_secs}|now>` }] }
-          ]
-        };
-
-        try{
-          const res = await fetch(SLACK_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type':'application/json' },
-            body: JSON.stringify(textBlock)
-          });
-          if(res.ok){
-            okBox.style.display = 'block';
-            form.reset();
-            setTimeout(closeModal, 1400);
-          }else{
-            const t = await res.text();
-            errBox.textContent = "Slack投稿エラー：" + t;
-            errBox.style.display = 'block';
-          }
-        }catch(err){
-          errBox.textContent = "通信エラーが発生しました。ネットワークをご確認ください。";
-          errBox.style.display = 'block';
-        }finally{
-          submitBtn.disabled = false;
-          submitBtn.textContent = "送信";
-        }
-      });
-    })();
-  </script>
+    }catch(err){
+      console.error(err);
+      errBox.textContent = "通信エラーが発生しました。ネットワークをご確認ください。";
+      errBox.style.display = 'block';
+    }finally{
+      submitBtn.disabled = false; submitBtn.textContent = "送信";
+    }
+  });
+})();
+</script>
 </body>
 </html>
