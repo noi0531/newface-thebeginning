@@ -419,6 +419,8 @@
   <!-- ====== Slack送信スクリプト（追加） ====== -->
   <script>
     (function(){
+        const RELAY_URL = "https://script.google.com/macros/s/AKfycbyQNZGeVybx-Bw-k0EXVPlgyZ_rUvHDuKC60uDIoDm9dT7Ln2LNlMUlNMDdmInwX68G/exec"; // GASのWebアプリURL
+        const TOKEN = "king300cl";    
       const triggers = document.querySelectorAll('[data-open-entry]');
       const backdrop = document.getElementById('entryModalBackdrop');
       const closeBtn = document.getElementById('closeEntryModal');
