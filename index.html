@@ -147,7 +147,7 @@
       .lp-section{padding:10px 12px}
     }
 
-    /* ====== Entry Modal (追加) ====== */
+    /* ====== Entry Modal ====== */
     .modal-backdrop{
       position:fixed; inset:0; display:none; place-items:center;
       background:rgba(0,0,0,.55); z-index:1000; backdrop-filter:blur(4px);
@@ -173,6 +173,16 @@
     .small{font-size:.9rem; opacity:.85}
     .success-msg{padding:10px 12px; border-radius:10px; background:rgba(34,197,94,.18); border:1px solid rgba(34,197,94,.35); display:none; margin-bottom:8px}
     .error-msg{padding:10px 12px; border-radius:10px; background:rgba(239,68,68,.18); border:1px solid rgba(239,68,68,.35); display:none; margin-bottom:8px}
+
+    /* よくある質問チップ */
+    .faq{margin-top:6px}
+    .faq-title{font-size:.9rem; opacity:.85; margin:4px 0 6px}
+    .faq-chips{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{
+      padding:6px 10px; border-radius:999px; cursor:pointer;
+      border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.06); color:var(--text);
+    }
+    .chip:hover{filter:brightness(1.1)}
   </style>
 </head>
 <body>
@@ -185,7 +195,6 @@
         <a href="#schedule">スケジュール</a>
         <a href="#benefits">特典</a>
         <a href="#news">お知らせ</a>
-        <!-- 変更: 応募→モーダル起動 -->
         <a href="#" data-open-entry class="btn" style="padding:8px 14px">応募</a>
       </div>
     </div>
@@ -204,11 +213,9 @@
       <span class="badge"># メディア露出も</span>
       <span class="badge"># 誰でも主人公</span>
     </div>
+    <!-- ヒーローは「今すぐ応募」だけ -->
     <div class="cta-wrap">
-      <!-- 変更: 今すぐ応募する→モーダル起動 -->
-<a href="#entry" class="btn" data-open-entry>今すぐ応募する</a>
-<!-- ナビの応募ボタンも -->
-<a href="#entry" class="btn" style="padding:8px 14px" data-open-entry>応募</a>
+      <a href="#entry" class="btn" data-open-entry>今すぐ応募</a>
     </div>
   </header>
 
@@ -249,7 +256,7 @@
       <div class="card span-12 reveal"><h2>Streaming Advisor</h2>
         <div class="grid">
           <div class="card span-4" style="text-align:center">
-           <img class="avatar" src="images/advisors/yume.webp" alt="Advisor Yume nomata Yume の写真">
+            <img class="avatar" src="images/advisors/yume.webp" alt="Advisor Yume nomata Yume の写真">
             <h3 class="advisor-name">Yume nomata Yume</h3>
             <p class="advisor-role">Streaming Advisor / マインド、歌</p>
             <p>トークから歌まで全てがハイクオリティなWAVEQueen</p>
@@ -274,7 +281,7 @@
         <h2>Lead Organizer</h2>
         <div class="grid" style="align-items:flex-start">
           <div class="span-5">
-           <img class="lead-photo" src="images/organizer/chama_left_1080x1440.webp" alt="Lead Organizer の写真">
+            <img class="lead-photo" src="images/organizer/chama_left_1080x1440.webp" alt="Lead Organizer の写真">
           </div>
           <div class="span-7">
             <h3 class="lead-name">Chama</h3>
@@ -340,7 +347,6 @@
       <div class="card span-12 reveal" style="text-align:center">
         <h2>エントリー</h2>
         <p>以下のフォームより必要事項をご入力ください。応募後、担当よりご連絡します。</p>
-        <!-- 変更: その場で応募ボタンを追加（モーダル起動） -->
         <div class="cta-wrap" style="justify-content:center">
           <a href="#" data-open-entry class="btn" style="font-size:1.1rem; padding:16px 32px">この場で応募する</a>
           <a href="https://forms.gle/vvqTnJBceDEdWR4F6" class="btn secondary" style="font-size:1.1rem; padding:16px 32px" target="_blank" rel="noopener">Googleフォームで応募（予備）</a>
@@ -350,7 +356,7 @@
     </div>
   </section>
 
-  <!-- ====== Entry Modal（追加） ====== -->
+  <!-- ====== Entry Modal ====== -->
   <div class="modal-backdrop" id="entryModalBackdrop" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="entryModalTitle">
       <h3 id="entryModalTitle">New Face The Beginning｜エントリー</h3>
@@ -360,7 +366,6 @@
       <div id="entryError" class="error-msg">送信に失敗しました。時間をおいて再度お試しください。</div>
 
       <form id="entryForm" class="form-grid" autocomplete="on">
-        <!-- 簡易スパム対策（人間は触らない） -->
         <input type="text" name="website" id="website" style="display:none" tabindex="-1" autocomplete="off">
 
         <div class="form-row">
@@ -393,6 +398,19 @@
         <div class="form-row">
           <label for="question">質問や要望 <span style="opacity:.7">(例：どうやったらイベントで一位とれますか？)</span></label>
           <textarea id="question" name="question" placeholder="質問・要望など自由にどうぞ"></textarea>
+
+          <!-- 追加: よくある質問（タップで挿入） -->
+          <div class="faq">
+            <div class="faq-title">よくある質問（タップで挿入）</div>
+            <div class="faq-chips" id="faqChips">
+              <button type="button" class="chip" data-q="還元率がわからない">還元率がわからない</button>
+              <button type="button" class="chip" data-q="1位の取り方">1位の取り方</button>
+              <button type="button" class="chip" data-q="定期時間の設定">定期時間の設定</button>
+              <button type="button" class="chip" data-q="配信スタイルの確立">配信スタイルの確立</button>
+              <button type="button" class="chip" data-q="有名ライバー">有名ライバー</button>
+              <button type="button" class="chip" data-q="目標までにすること">目標までにすること</button>
+            </div>
+          </div>
         </div>
 
         <div class="modal-actions">
@@ -402,7 +420,23 @@
       </form>
     </div>
   </div>
-  <!-- ====== /Entry Modal ====== -->
+  <!-- /Entry Modal -->
+
+  <!-- ====== Thanks Modal（送信完了） ====== -->
+  <div class="modal-backdrop" id="thanksModalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="thanksTitle">
+      <h3 id="thanksTitle">送信ありがとうございます</h3>
+      <p class="small" style="margin-top:-4px; line-height:1.9">
+        NewFaceTheBeginningにご応募いただきありがとうございます。<br>
+        担当者よりWAVE内のDMにてご連絡されていただきますので<br>
+        お待ちいただけますと幸いです。　NFTB運営一同
+      </p>
+      <div class="modal-actions" style="justify-content:center">
+        <button type="button" class="btn" id="closeThanksModal">閉じる</button>
+      </div>
+    </div>
+  </div>
+  <!-- /Thanks Modal -->
 
   <footer>
     <p>© 2025 NewFace Project | Produced by CCStudio</p>
@@ -417,75 +451,99 @@
     els.forEach(el=>io.observe(el));
   </script>
 
-  <!-- ====== Slack送信スクリプト（追加） ====== -->
-<!-- ====== Slack送信スクリプト（差し替え） ====== -->
-<script>
-(function(){
-  // ← ここにだけ定義しておく
-  const RELAY_URL = "https://script.google.com/macros/s/AKfycbyvNjKY82wCBYneASAG1JvFcAlxJrTyRVQnayJTQpdPlb5YUdwUbuQ4fIAJ7gpnqq7j/exec";
-  const TOKEN = "king300cl"; // GAS側と一致
+  <!-- ====== Slack送信スクリプト ====== -->
+  <script>
+  (function(){
+    // 必要に応じて差し替え
+    const RELAY_URL = "https://script.google.com/macros/s/AKfycbyvNjKY82wCBYneASAG1JvFcAlxJrTyRVQnayJTQpdPlb5YUdwUbuQ4fIAJ7gpnqq7j/exec";
+    const TOKEN = "king300cl";
 
-  const triggers = document.querySelectorAll('[data-open-entry]');
-  const backdrop  = document.getElementById('entryModalBackdrop');
-  const closeBtn  = document.getElementById('closeEntryModal');
-  const form      = document.getElementById('entryForm');
-  const submitBtn = document.getElementById('submitEntry');
-  const okBox     = document.getElementById('entrySuccess');
-  const errBox    = document.getElementById('entryError');
+    const triggers = document.querySelectorAll('[data-open-entry]');
+    const backdrop  = document.getElementById('entryModalBackdrop');
+    const closeBtn  = document.getElementById('closeEntryModal');
+    const form      = document.getElementById('entryForm');
+    const submitBtn = document.getElementById('submitEntry');
+    const okBox     = document.getElementById('entrySuccess');
+    const errBox    = document.getElementById('entryError');
 
-  function openModal(){ backdrop.classList.add('show'); document.body.style.overflow='hidden'; okBox.style.display='none'; errBox.style.display='none'; }
-  function closeModal(){ backdrop.classList.remove('show'); document.body.style.overflow=''; }
+    // よくある質問
+    const chips     = document.getElementById('faqChips');
+    const questionT = document.getElementById('question');
 
-  // モーダル起動
-  triggers.forEach(el => el.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); }));
-  closeBtn?.addEventListener('click', closeModal);
-  backdrop?.addEventListener('click', (e)=>{ if(e.target===backdrop) closeModal(); });
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && backdrop.classList.contains('show')) closeModal(); });
+    // サンクスモーダル
+    const thanksBackdrop = document.getElementById('thanksModalBackdrop');
+    const closeThanksBtn = document.getElementById('closeThanksModal');
 
-  // 送信
-  form?.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    okBox.style.display='none'; errBox.style.display='none';
-    if(document.getElementById('website')?.value) return; // honeypot
+    function openModal(){ backdrop.classList.add('show'); document.body.style.overflow='hidden'; okBox.style.display='none'; errBox.style.display='none'; }
+    function closeModal(){ backdrop.classList.remove('show'); document.body.style.overflow=''; }
+    function openThanks(){ thanksBackdrop.classList.add('show'); document.body.style.overflow='hidden'; }
+    function closeThanks(){ thanksBackdrop.classList.remove('show'); document.body.style.overflow=''; }
 
-    const payload = {
-      waveName: document.getElementById('waveName').value.trim(),
-      intro:    document.getElementById('intro').value.trim(),
-      advisor:  document.getElementById('advisor').value,
-      goal:     document.getElementById('goal').value.trim(),
-      question: document.getElementById('question').value.trim()
-    };
-    if(!payload.waveName || !payload.intro || !payload.advisor || !payload.goal){
-      errBox.textContent = "未入力の項目があります。ご確認ください。";
-      errBox.style.display = 'block';
-      return;
-    }
+    // 起動/閉じる
+    triggers.forEach(el => el.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); }));
+    closeBtn?.addEventListener('click', closeModal);
+    backdrop?.addEventListener('click', (e)=>{ if(e.target===backdrop) closeModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape' && (backdrop.classList.contains('show')||thanksBackdrop.classList.contains('show'))){ closeModal(); closeThanks(); }});
+    closeThanksBtn?.addEventListener('click', closeThanks);
+    thanksBackdrop?.addEventListener('click', (e)=>{ if(e.target===thanksBackdrop) closeThanks(); });
 
-    submitBtn.disabled = true; submitBtn.textContent = "送信中…";
-
-    try{
-      // CORSプリフライト回避のためヘッダを付けない
-      const res  = await fetch(RELAY_URL, { method:'POST', body: JSON.stringify({ token: TOKEN, payload }) });
-      const json = await res.json();
-      console.log('relay result', json);
-
-      if(json.ok){
-        okBox.style.display = 'block';
-        form.reset();
-        setTimeout(closeModal, 1400);
-      }else{
-        errBox.textContent = "中継エラー：" + (json.error || json.body || ("status " + json.status));
-        errBox.style.display = 'block';
+    // よくある質問チップ → 追記
+    chips?.addEventListener('click', (e)=>{
+      const btn = e.target.closest('[data-q]');
+      if(!btn) return;
+      const q = btn.getAttribute('data-q');
+      const line = '・' + q;
+      const cur = (questionT.value || '').trim();
+      if(!cur.includes(q)){
+        questionT.value = cur ? (cur + '\n' + line) : line;
       }
-    }catch(err){
-      console.error(err);
-      errBox.textContent = "通信エラーが発生しました。ネットワークをご確認ください。";
-      errBox.style.display = 'block';
-    }finally{
-      submitBtn.disabled = false; submitBtn.textContent = "送信";
-    }
-  });
-})();
-</script>
+      questionT.focus();
+    });
+
+    // 送信
+    form?.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      okBox.style.display='none'; errBox.style.display='none';
+      if(document.getElementById('website')?.value) return; // honeypot
+
+      const payload = {
+        waveName: document.getElementById('waveName').value.trim(),
+        intro:    document.getElementById('intro').value.trim(),
+        advisor:  document.getElementById('advisor').value,
+        goal:     document.getElementById('goal').value.trim(),
+        question: document.getElementById('question').value.trim()
+      };
+      if(!payload.waveName || !payload.intro || !payload.advisor || !payload.goal){
+        errBox.textContent = "未入力の項目があります。ご確認ください。";
+        errBox.style.display = 'block';
+        return;
+      }
+
+      submitBtn.disabled = true; submitBtn.textContent = "送信中…";
+
+      try{
+        // CORSプリフライト回避のためヘッダを付けない
+        const res  = await fetch(RELAY_URL, { method:'POST', body: JSON.stringify({ token: TOKEN, payload }) });
+        const json = await res.json();
+        console.log('relay result', json);
+
+        if(json.ok){
+          form.reset();
+          closeModal();
+          openThanks();  // サンクスモーダルを開く
+        }else{
+          errBox.textContent = "中継エラー：" + (json.error || json.body || ("status " + json.status));
+          errBox.style.display = 'block';
+        }
+      }catch(err){
+        console.error(err);
+        errBox.textContent = "通信エラーが発生しました。ネットワークをご確認ください。";
+        errBox.style.display = 'block';
+      }finally{
+        submitBtn.disabled = false; submitBtn.textContent = "送信";
+      }
+    });
+  })();
+  </script>
 </body>
 </html>
